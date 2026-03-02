@@ -11,6 +11,7 @@ RUN apt-get update && \
     emacs-nox \
     graphviz \
     libxcb1 \
+    pydot \
     && \
     rm -rf /var/lib/apt/lists/*
 
