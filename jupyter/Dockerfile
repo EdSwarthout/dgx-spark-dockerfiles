@@ -1,14 +1,17 @@
 # docker build --progress plain -t jupyter .
 
-# https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch/tags?version=25.12-py3
+# https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
-FROM nvcr.io/nvidia/pytorch:25.12-py3
+FROM nvcr.io/nvidia/pytorch:26.01-py3
 
 ENV DEBIAN_FRONTEND=noninteracive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    emacs-nox && \
+    emacs-nox \
+    graphviz \
+    libxcb1 \
+    && \
     rm -rf /var/lib/apt/lists/*
 
 COPY .emacs /root
@@ -29,7 +32,8 @@ USER ${USER}
 RUN mkdir /home/${USER}/.cache
 #RUN chown 1001:1001 /home/${USER}/.cache
 
-WORKDIR /home/${USER}/Downloads/python/jupyter
+COPY --chown=${USER}:${USER} .emacs /home/${USER}/
+
+WORKDIR /home/${USER}/Downloads/python/pytorch
 
 CMD ["jupyter", "lab"]
-
