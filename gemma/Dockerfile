@@ -10,10 +10,10 @@ RUN pip install \
     keras \
     plotly
 
+RUN pip install \
+    kagglehub
+
 ARG USER=ed
 USER ${USER}
 
 RUN mkdir /home/${USER}/.gemma
-WORKDIR /home/${USER}/Downloads/python
-
-#CMD ["jupyter", "lab"]
