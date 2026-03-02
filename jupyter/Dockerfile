@@ -2,7 +2,8 @@
 
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
-FROM nvcr.io/nvidia/pytorch:26.01-py3
+ARG VER=26.02-py3
+FROM nvcr.io/nvidia/pytorch:${VER}
 
 ENV DEBIAN_FRONTEND=noninteracive
 RUN apt-get update && \
