@@ -1,5 +1,5 @@
 # docker build --progress plain -t jupyter .
-
+# docker run --user=${USER}:${USER}
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
 ARG VER=26.02-py3
@@ -12,7 +12,6 @@ RUN apt-get update && \
     emacs-nox \
     graphviz \
     libxcb1 \
-    pydot \
     && \
     rm -rf /var/lib/apt/lists/*
 
@@ -21,7 +20,8 @@ COPY .emacs /root
 RUN pip install -U pip
 
 RUN pip install \
-    ipywidgets
+    ipywidgets \
+    pydot
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
 
@@ -32,7 +32,6 @@ RUN useradd -m -s /bin/bash ${USER}
 
 USER ${USER}
 RUN mkdir /home/${USER}/.cache
-#RUN chown 1001:1001 /home/${USER}/.cache
 
 COPY --chown=${USER}:${USER} .emacs /home/${USER}/
 
