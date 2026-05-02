@@ -22,7 +22,7 @@ scipy \
 tqdm \
 psutil \
 alembic \
-SQLAlchemy \
+SQLAlchemy>=2.0.0 \
 filelock \
 av>=14.2.0 \
 imageio-ffmpeg \
@@ -43,11 +43,11 @@ PyOpenGL \
 glfw
 
 RUN pip install \
-comfyui-frontend-package==1.42.10 \
-comfyui-workflow-templates==0.9.45 \
-comfyui-embedded-docs==0.4.3 \
-comfyui_manager==4.1 \
-comfy-aimdo>=0.2.12
+comfyui-frontend-package==1.42.15 \
+comfyui-workflow-templates==0.9.66 \
+comfyui-embedded-docs==0.4.4 \
+comfyui_manager==4.2.1 \
+comfy-aimdo==0.3.0
 
 # for https://github.com/kijai/ComfyUI-KJNodes.git
 RUN pip install \
