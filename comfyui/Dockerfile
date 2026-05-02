@@ -23,9 +23,12 @@ tqdm \
 psutil \
 alembic \
 SQLAlchemy \
+filelock \
 av>=14.2.0 \
 imageio-ffmpeg \
-requests
+requests \
+simpleeval>=1.0.0 \
+blake3
 
 RUN pip install \
 fastsafetensors
@@ -40,11 +43,11 @@ PyOpenGL \
 glfw
 
 RUN pip install \
-comfyui-frontend-package==1.39.19 \
-comfyui-workflow-templates==0.9.5 \
+comfyui-frontend-package==1.42.10 \
+comfyui-workflow-templates==0.9.45 \
 comfyui-embedded-docs==0.4.3 \
-comfyui_manager==4.1b1 \
-comfy-aimdo>=0.2.4
+comfyui_manager==4.1 \
+comfy-aimdo>=0.2.12
 
 # for https://github.com/kijai/ComfyUI-KJNodes.git
 RUN pip install \
@@ -61,8 +64,8 @@ opencv-python-headless
 # Transformers 4.57.3 needs older huggingface-hub #42670
 # https://github.com/huggingface/transformers/issues/42670
 
-ARG CK=0.2.7
-# comfy-kitchen>=0.2.7
+ARG CK=0.2.8
+# comfy-kitchen>=0.2.8
 RUN pip install comfy-kitchen[cublas]>=${CK}
 
 #COPY comfy_kitchen-${CK}-cp312-abi3-linux_aarch64.whl .

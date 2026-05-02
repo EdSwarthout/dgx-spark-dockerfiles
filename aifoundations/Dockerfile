@@ -6,7 +6,10 @@ USER root
 
 COPY ai-foundations /workspace/ai-foundations
 
+# gptqmodel 6.0.3 requires numpy==2.2.6; python_version < "3.14", but you have numpy 2.0.2 which is incompatible.
+
 RUN cd /workspace/ai-foundations && \
+pip uninstall -y gptqmodel; \
 pip install .
 
 RUN pip install \

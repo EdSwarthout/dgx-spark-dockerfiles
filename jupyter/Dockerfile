@@ -1,9 +1,14 @@
-# docker build --progress plain -t jupyter .
+# docker build --progress plain -v /mnt/spark9/packages/Downloads/apt-cache:/var/cache/apt:z -t jupyter .
+
 # docker run --user=${USER}:${USER}
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
-ARG VER=26.02-py3
+ARG VER=26.03-py3
 FROM nvcr.io/nvidia/pytorch:${VER}
+
+# Keep /var/cache/apt.  Note: apt-get keeps debs, add config so apt also keeps
+RUN rm /etc/apt/apt.conf.d/docker-clean
+RUN echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/01keep-debs
 
 ENV DEBIAN_FRONTEND=noninteracive
 RUN apt-get update && \
@@ -17,10 +22,13 @@ RUN apt-get update && \
 
 COPY .emacs /root
 
-RUN pip install -U pip
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install -U pip
 
-RUN pip install \
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install \
     ipywidgets \
+    jupyterlab_execute_time \
     pydot
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"

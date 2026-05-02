@@ -4,10 +4,14 @@ FROM torchaudio AS transformers
 
 USER root
 
-RUN pip install \
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install \
     accelerate \
     diffusers \
-    transformers>=4.51.3
+    openai openai[aiohttp] \
+    transformers>=4.51.3 \
+    && \
+    find /root/.cache -type f -ls
 
 ARG USER=ed
 USER ${USER}

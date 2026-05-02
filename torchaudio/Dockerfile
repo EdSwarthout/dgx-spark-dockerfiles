@@ -24,7 +24,8 @@ RUN apt-get update && \
     ffmpeg
 
 # need to uninstall 2.10.0a0+a36e1d39eb.nv26.1.42222806 because there is no matching torchaudio
-RUN pip uninstall -y torch torchvision && \
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip uninstall -y torch torchvision && \
     pip install --pre --index-url https://download.pytorch.org/whl/nightly/cu130 \
     torch \
     torchvision \
