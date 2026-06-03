@@ -9,9 +9,7 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     accelerate \
     diffusers \
     openai openai[aiohttp] \
-    transformers>=4.51.3 \
-    && \
-    find /root/.cache -type f -ls
+    transformers>=4.51.3
 
 ARG USER=ed
 USER ${USER}

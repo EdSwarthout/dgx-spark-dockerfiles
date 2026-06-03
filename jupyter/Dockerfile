@@ -1,6 +1,6 @@
-# docker build --progress plain -v /mnt/spark9/packages/Downloads/apt-cache:/var/cache/apt:z -t jupyter .
+# docker build --progress plain -t jupyter .
+# uses docker apt-cache and pip-cache
 
-# docker run --user=${USER}:${USER}
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
 ARG VER=26.03-py3
@@ -11,7 +11,9 @@ RUN rm /etc/apt/apt.conf.d/docker-clean
 RUN echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/01keep-debs
 
 ENV DEBIAN_FRONTEND=noninteracive
-RUN apt-get update && \
+
+RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt \
+    apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
     emacs-nox \
