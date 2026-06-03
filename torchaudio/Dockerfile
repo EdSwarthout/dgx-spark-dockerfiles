@@ -4,33 +4,40 @@
 
 FROM jupyter
 
-#RUN git clone --depth 1 --branch release/2.10 https://github.com/pytorch/audio
-
-#RUN cd audio && \
-#    export USE_ROCM=0 && export USE_CUDA=1
-# BUILD_RNNT: Enable/disable custom RNN-T loss function.
-# USE_ROCM: Enable/disable AMD ROCm support.
-# USE_CUDA: Enable/disable CUDA support.
-
-#RUN export PYTORCH_VERSION=2.10.0
-
-#RUN env && pip wheel -e . -v --no-build-isolation
-
 USER root
-
-RUN apt-get update && \
+RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt \
+    apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    ffmpeg
+    ffmpeg \
+    && \
+    rm -rf /var/lib/apt/lists/*
 
-# need to uninstall 2.10.0a0+a36e1d39eb.nv26.1.42222806 because there is no matching torchaudio
+WORKDIR /workspace/src
+
+RUN pwd && \
+    python -c "import torch; print(torch.version.cuda)"
+
+RUN git clone --depth 1 --branch release/2.11 https://github.com/pytorch/audio
+
+WORKDIR /workspace/src/audio
+
+RUN export USE_ROCM=0 && \
+    export USE_CUDA=1 && \
+    env | sort
+
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
-    pip uninstall -y torch torchvision && \
-    pip install --pre --index-url https://download.pytorch.org/whl/nightly/cu130 \
-    torch \
-    torchvision \
-    torchaudio \
-    torchcodec
+    pip install --editable . -vv --no-build-isolation
+
+# RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+#     pip install --pre --index-url https://download.pytorch.org/whl/nightly/cu130 \
+#     torch \
+#     torchvision \
+#     torchaudio \
+#     torchcodec
+#
+# #    torchao
 
 ARG USER=ed
+WORKDIR /home/${USER}/Downloads/python/pytorch
 USER ${USER}
