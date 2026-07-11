@@ -3,7 +3,7 @@
 
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
-ARG VER=26.03-py3
+ARG VER=26.05-py3
 FROM nvcr.io/nvidia/pytorch:${VER}
 
 # Keep /var/cache/apt.  Note: apt-get keeps debs, add config so apt also keeps
