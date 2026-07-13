@@ -24,13 +24,30 @@ RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt \
 
 COPY .emacs /root
 
-RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
-    pip install -U pip
+ENV  PIP_ROOT_USER_ACTION=ignore
+# fixes:
+# Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
-    pip install \
+    pip install -U --break-system-packages pip && \
+    pip config set global.break-system-packages true
+# fixes:
+#  WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable
+
+
+# Freeze jupyter_server at v2.19.0 because of:
+# https://github.com/jupyter-server/jupyter_server/issues/1672
+
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install -U --break-system-packages \
+    ipykernel \
     ipywidgets \
+    jupyter_client \
+    jupyter_server==v2.19.0 \
+    jupyter_core \
+    jupyterlab \
     jupyterlab_execute_time \
+    notebook \
     pydot
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
