@@ -41,16 +41,20 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install -U --break-system-packages \
     ipykernel \
+    ipython \
     ipywidgets \
     jupyter_client \
-    jupyter_server==v2.19.0 \
     jupyter_core \
+    jupyter_server==v2.19.0 \
     jupyterlab \
     jupyterlab_execute_time \
     notebook \
     pydot
 
 RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
+
+# Remove noisy startup messages
+RUN rm /opt/nvidia/entrypoint.d/*.txt
 
 # userid=ubuntu is uid 1000
 # uid 1001
