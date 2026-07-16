@@ -17,19 +17,6 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     librosa \
     sentence-transformers
 
-# Install GPT-QModel (gptqmodel)
-# https://huggingface.co/docs/transformers/en/quantization/gptq
-RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
-    pip install --no-deps --break-system-packages --ignore-installed \
-    TokeNicer \
-    defuser \
-    device-smi \
-    gptqmodel \
-    logbar \
-    optimum \
-    pypcre \
-    safetensors
-
 ARG USER=ed
 USER ${USER}
 WORKDIR /home/${USER}/Downloads/python/pytorch
