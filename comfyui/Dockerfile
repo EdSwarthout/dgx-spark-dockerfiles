@@ -146,6 +146,12 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 # Requires: filelock, fsspec, jinja2, networkx, setuptools, sympy, typing-extensions
 # Required-by: accelerate, flash_attn, kornia, lovely-tensors, nvdlfw_inspect, nvidia-modelopt, nvidia-resiliency-ext, sentence-transformers, spandrel, torchdata, torchsde, torchvision, transformer_engine
 
+# torchinfo summary for Stable Diffusion hands on
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install -v --no-deps --break-system-packages --ignore-installed \
+    torchinfo \
+    -c /workspace/constraints.txt
+
 
 # userid=ubuntu is uid 1000
 # uid 1001
