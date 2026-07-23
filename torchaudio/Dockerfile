@@ -1,8 +1,8 @@
-# docker build --progress plain -t torchaudio .
-
+# https://docs.pytorch.org/audio/stable/index.html
+# https://github.com/pytorch/audio
 # https://meta-pytorch.org/torchcodec/stable/index.html
 
-FROM jupyter
+FROM pytorch-jp
 
 USER root
 RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt \
@@ -29,13 +29,15 @@ RUN export USE_ROCM=0 && \
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install --editable . -vv --no-build-isolation
 
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install --no-deps torchcodec
+
 # RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 #     pip install --pre --index-url https://download.pytorch.org/whl/nightly/cu130 \
 #     torch \
 #     torchvision \
 #     torchaudio \
 #     torchcodec
-#
 # #    torchao
 
 ARG USER=ed
