@@ -1,5 +1,3 @@
-# docker build --progress plain -t cudnn .
-
 # https://docs.nvidia.com/deeplearning/cudnn/latest/
 
 FROM transformers

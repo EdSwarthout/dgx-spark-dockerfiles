@@ -1,4 +1,5 @@
-# docker build --progress plain -t gemma .
+# https://github.com/google/gemma_pytorch
+# https://deepmind.google/models/gemma/
 
 FROM transformers
 

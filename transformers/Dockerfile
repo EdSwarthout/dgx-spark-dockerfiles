@@ -1,5 +1,3 @@
-# docker build --progress plain -t transformers .
-
 FROM torchaudio AS transformers
 
 USER root
@@ -19,4 +17,3 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 
 ARG USER=ed
 USER ${USER}
-WORKDIR /home/${USER}/Downloads/python/pytorch
