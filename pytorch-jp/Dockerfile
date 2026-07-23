@@ -1,4 +1,3 @@
-# docker build --progress plain -t jupyter .
 # uses docker apt-cache and pip-cache
 
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
@@ -7,7 +6,7 @@ ARG VER=26.05-py3
 FROM nvcr.io/nvidia/pytorch:${VER}
 
 # Keep /var/cache/apt.  Note: apt-get keeps debs, add config so apt also keeps
-RUN rm /etc/apt/apt.conf.d/docker-clean
+RUN rm /etc/apt/apt.conf.d/docker-clean || true
 RUN echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/01keep-debs
 
 ENV DEBIAN_FRONTEND=noninteracive
@@ -24,7 +23,7 @@ RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt \
 
 COPY .emacs /root
 
-ENV  PIP_ROOT_USER_ACTION=ignore
+ENV PIP_ROOT_USER_ACTION=ignore
 # fixes:
 # Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 
@@ -67,14 +66,17 @@ RUN echo -e 'numpy<2.5\npackaging<=26.0\nsetuptools<82\nfsspec<=2026.2.0' > /wor
 
 # userid=ubuntu is uid 1000
 # uid 1001
-ARG USER=ed
-RUN useradd -m -s /bin/bash ${USER}
+ARG USERID=ed
+ENV USERID=${USERID}
 
-USER ${USER}
-RUN mkdir /home/${USER}/.cache
+RUN useradd -m -s /bin/bash ${USERID}
 
-COPY --chown=${USER}:${USER} .emacs /home/${USER}/
+USER ${USERID}
 
-WORKDIR /home/${USER}/Downloads/python/pytorch
+RUN mkdir /home/${USERID}/.cache
+
+COPY --chown=${USERID}:${USERID} .emacs /home/${USERID}/
+
+WORKDIR /home/${USERID}/Downloads/python
 
 CMD ["jupyter", "lab"]
