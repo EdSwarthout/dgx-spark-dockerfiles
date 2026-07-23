@@ -62,8 +62,8 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install -v --break-system-packages --ignore-installed \
-    comfyui-frontend-package==1.45.21 \
-    comfyui-workflow-templates==0.11.9 \
+    comfyui-frontend-package==1.47.10 \
+    comfyui-workflow-templates==0.11.15 \
     comfyui-embedded-docs==0.5.8 \
     comfyui_manager==4.2.2 \
     comfy-aimdo==0.4.10 \
@@ -88,7 +88,7 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip show torch opencv-python-headless
 
-ARG CK=0.2.20
+ARG CK=0.2.22
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install -v --break-system-packages --ignore-installed \
     comfy-kitchen[cublas]>=${CK} \
