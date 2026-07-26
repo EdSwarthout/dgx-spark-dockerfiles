@@ -1,0 +1,42 @@
+diff -u /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements-pyproject.txt /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements.txt
+--- /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements-pyproject.txt	2026-07-16 20:16:05.000000000 -0500
++++ /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements.txt	2026-07-25 16:37:50.894758209 -0500
+@@ -252,7 +252,7 @@
+     # via
+     #   ai_foundations (pyproject.toml)
+     #   mediapy
+-jax==0.7.2
++#jax==0.7.2
+     # via
+     #   ai_foundations (pyproject.toml)
+     #   chex
+@@ -262,7 +262,7 @@
+     #   kauldron
+     #   optax
+     #   orbax-checkpoint
+-jaxlib==0.7.2
++#jaxlib==0.7.2
+     # via
+     #   chex
+     #   clu
+@@ -355,7 +355,7 @@
+     # via orbax-checkpoint
+ networkx==3.6.1
+     # via scikit-image
+-numpy==2.0.2
++#numpy==2.0.2
+     # via
+     #   ai_foundations (pyproject.toml)
+     #   chex
+@@ -558,7 +558,8 @@
+     # via kauldron
+ scikit-learn==1.9.0
+     # via kauldron
+-scipy==1.18.0
++# jax has scipy                        1.17.1
++#scipy==1.18.0
+     # via
+     #   jax
+     #   jaxlib
+
+Diff finished.  Sat Jul 25 19:25:38 2026
