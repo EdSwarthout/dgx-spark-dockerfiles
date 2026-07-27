@@ -2,7 +2,7 @@
 
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch
 
-ARG VER=26.05-py3
+ARG VER=26.07-py3
 FROM nvcr.io/nvidia/pytorch:${VER}
 
 # Keep /var/cache/apt.  Note: apt-get keeps debs, add config so apt also keeps
@@ -62,7 +62,7 @@ RUN rm /opt/nvidia/entrypoint.d/*.txt
 # torch 2.12.0a0+5aff3928d8.nv26.5.50603568 requires setuptools<82, but you have setuptools 83.0.0 which is incompatible.
 # datasets 4.8.5 requires fsspec[http]<=2026.2.0,>=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.
 
-RUN echo -e 'numpy<2.5\npackaging<=26.0\nsetuptools<82\nfsspec<=2026.2.0' > /workspace/constraints.txt
+#RUN echo -e 'numpy<2.5\npackaging<=26.0\nsetuptools<82\nfsspec<=2026.2.0' > /workspace/constraints.txt
 
 # userid=ubuntu is uid 1000
 # uid 1001

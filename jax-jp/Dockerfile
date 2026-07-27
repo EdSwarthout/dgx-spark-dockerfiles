@@ -3,7 +3,7 @@
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/jax
 # https://docs.jax.dev/en/latest/index.html
 
-ARG VER=26.05-py3
+ARG VER=26.07-py3
 FROM nvcr.io/nvidia/jax:${VER}
 
 # Keep /var/cache/apt.  Note: apt-get keeps debs, add config so apt also keeps
