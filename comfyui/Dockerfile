@@ -63,8 +63,8 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install -v --break-system-packages --ignore-installed \
     comfyui-frontend-package==1.47.10 \
-    comfyui-workflow-templates==0.11.15 \
-    comfyui-embedded-docs==0.5.8 \
+    comfyui-workflow-templates==0.11.17\
+    comfyui-embedded-docs==0.5.9 \
     comfyui_manager==4.2.2 \
     comfy-aimdo==0.4.10 \
     comfy-angle \
