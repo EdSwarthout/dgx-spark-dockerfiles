@@ -4,14 +4,13 @@ FROM transformers AS comfyui
 
 USER root
 
-# pytest added in gemma, but it also installs xmanager
-# xmanager 0.7.1 requires alembic==1.4.3, but you have alembic 1.18.5 which is incompatible.
-# xmanager 0.7.1 requires sqlalchemy==1.2.19, but you have sqlalchemy 2.0.51 which is incompatible.
+# Using:
+#RUN echo '' > /workspace/constraints.txt
+# results:
+#6 19.75 datasets 5.0.0 requires fsspec[http]<=2026.4.0,>=2023.1.0, but you have fsspec 2026.6.0 which is incompatible.
+#6 19.75 numba 0.64.0 requires numpy<2.5,>=1.22, but you have numpy 2.5.1 which is incompatible.
 
-# triton-kernels 1.0.0+gitb4e20bb.nv26.5 requires pytest, which is not installed.
-# cuda-python 13.2.0 requires cuda-bindings~=13.2.0, but you have cuda-bindings 13.3.1 which is incompatible.
-
-RUN echo -e 'cuda-bindings==13.2.0' >> /workspace/constraints.txt
+RUN echo -e 'numpy<2.5\nfsspec<=2026.4.0' > /workspace/constraints.txt
 
 # Include:
 # imageio-ffmpeg for https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
@@ -63,7 +62,7 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install -v --break-system-packages --ignore-installed \
     comfyui-frontend-package==1.47.10 \
-    comfyui-workflow-templates==0.11.17\
+    comfyui-workflow-templates==0.11.19\
     comfyui-embedded-docs==0.5.9 \
     comfyui_manager==4.2.2 \
     comfy-aimdo==0.4.10 \
@@ -88,7 +87,7 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip show torch opencv-python-headless
 
-ARG CK=0.2.22
+ARG CK=0.2.24
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install -v --break-system-packages --ignore-installed \
     comfy-kitchen[cublas]>=${CK} \
@@ -152,6 +151,11 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     torchinfo \
     -c /workspace/constraints.txt
 
+
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install -v --no-deps --break-system-packages --ignore-installed \
+    PyOpenGL-accelerate>=3.1.8 \
+    -c /workspace/constraints.txt
 
 # userid=ubuntu is uid 1000
 # uid 1001
