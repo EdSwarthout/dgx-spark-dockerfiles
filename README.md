@@ -3,6 +3,8 @@
 This repository contains a set of layered Dockerfiles designed for machine learning, local LLM inference, and AI workflows.
 The containers build upon each other to create specialized environments.
 
+Based on <https://docs.nvidia.com/deeplearning/frameworks/index.html>
+
 ## Container Hierarchy & Purposes
 
 * **`jupyter/`**
