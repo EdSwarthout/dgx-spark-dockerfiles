@@ -5,6 +5,8 @@ FROM transformers
 
 USER root
 
+RUN echo '' > /workspace/constraints.txt
+
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     pip install \
     inspireface \
