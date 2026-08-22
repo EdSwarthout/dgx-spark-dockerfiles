@@ -14,6 +14,60 @@ command. Each subdirectory's `env.rc` defines `d_image`, `d_name`, `d_build`,
 `d_build_extra`, `d_run`, and (for the base images) `d_0` (which pulls the
 base NGC image).
 
+## Prerequisites
+
+* An NVIDIA DGX Spark (or other CUDA 13-capable GPU host) with a working
+  Docker installation and `--gpus all` support.
+* Access to NVIDIA NGC container registry images
+  (<https://catalog.ngc.nvidia.com>).
+* The helper scripts hardcode a few host paths in each subdirectory's
+  `env.rc` — notably the non-root user (`d_user=ed`) and mount points such as
+  `/home/ed/.cache/huggingface` and `/home/ed/Downloads/$d_local/.local`.
+  Adjust these to your own username/directories before building or running.
+
+## Quickstart
+
+```sh
+git clone <this-repo> && cd dgx-spark-dockerfiles
+source env.rc
+
+# Build every image: bases first (with d_0 pulling the NGC base),
+# then addons in dependency order.
+d_build_all
+
+# Or build/run a single environment:
+cd pytorch-jp && source env.rc
+d_0          # pull the official NGC base image
+d_build      # build the layered image
+d_run        # run it (interactive, --rm, --gpus all)
+```
+
+## Helper Functions
+
+| Function           | What it does                                                        |
+|--------------------|---------------------------------------------------------------------|
+| `d_build`          | Build the current directory's image (`d_image`).                    |
+| `d_build_all`      | Build all bases (running `d_0` first), then all addons, in order.   |
+| `d_run`            | Run the image interactively with GPU/cache mounts.                  |
+| `d_bash`           | `docker exec -it` into the running container as the default user.   |
+| `d_bash0`          | Same, but as root (`--user 0`).                                     |
+| `d_run_all`        | Run a command in every base and addon container in turn.            |
+| `d_pip_list_all`   | Dump `pip list` from every image into `logs/pip_list.<name>.log`.   |
+
+Build order is driven by two lists in the top-level `env.rc`: `dirs_base`
+(built first) and `dirs_addons` (built second, on top of their parents).
+
+## Dependency Graph
+
+```
+pytorch-jp ──► torchaudio ──► transformers ──┬─► cudnn
+                                             ├─► comfyui
+                                             └─► llamacpp
+jax-jp ──┬─► gemma
+         └─► aifoundations
+cudadl-jp, vllm-vllm-openai  (standalone)
+```
+
 ## Base Images
 
 These are built directly from official NVIDIA NGC containers and are the
