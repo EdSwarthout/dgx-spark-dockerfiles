@@ -1,16 +1,15 @@
-diff -u /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements-pyproject.txt /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements.txt
---- /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements-pyproject.txt	2026-07-16 20:16:05.000000000 -0500
-+++ /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundations/requirements.txt	2026-07-25 16:37:50.894758209 -0500
-@@ -252,7 +252,7 @@
-     # via
-     #   ai_foundations (pyproject.toml)
+--- requirements.txt.orig	2026-10-16 17:26:26.802932604 -0500
++++ requirements.txt	2026-10-16 17:28:29.529878537 -0500
+@@ -259,7 +259,7 @@
      #   mediapy
+ ipython-pygments-lexers==1.1.1
+     # via ipython
 -jax==0.7.2
 +#jax==0.7.2
      # via
      #   ai_foundations (pyproject.toml)
      #   chex
-@@ -262,7 +262,7 @@
+@@ -269,7 +269,7 @@
      #   kauldron
      #   optax
      #   orbax-checkpoint
@@ -19,24 +18,22 @@ diff -u /mnt/spark1/home/ed/Downloads/docker/pytorch/aifoundations/ai-foundation
      # via
      #   chex
      #   clu
-@@ -355,7 +355,7 @@
+@@ -362,7 +362,7 @@
      # via orbax-checkpoint
- networkx==3.6.1
+ networkx==3.7
      # via scikit-image
--numpy==2.0.2
-+#numpy==2.0.2
+-numpy==2.5.4
++#numpy==2.5.4
      # via
      #   ai_foundations (pyproject.toml)
      #   chex
-@@ -558,7 +558,8 @@
+@@ -569,7 +569,8 @@
      # via kauldron
- scikit-learn==1.9.0
+ scikit-learn==1.9.1
      # via kauldron
--scipy==1.18.0
-+# jax has scipy                        1.17.1
-+#scipy==1.18.0
+-scipy==1.18.1
++# jax has scipy 1.17.1
++#scipy==1.18.1
      # via
      #   jax
      #   jaxlib
-
-Diff finished.  Sat Jul 25 19:25:38 2026
