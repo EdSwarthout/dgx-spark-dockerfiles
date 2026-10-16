@@ -1,0 +1,16 @@
+# Consolidated pip pins — single source of truth (Phase 0, Step 1).
+# Not yet wired into addons; CONSOLIDATION_PLAN2 Phase 0 steps 5-8 will pass
+# `-c /workspace/common/constraints.txt`. Revisit each pin on the next NGC bump.
+
+# jupyter_server pinned for upstream issue #1672.
+# Kept inline in jp.sh today (see Phase 0 Step 2 decision); move here when the
+# base images / addons are rewired to `-c constraints.txt` in later steps.
+#jupyter_server==v2.19.0
+
+# comfyui constraint — clashes with transformers/cudnn until global -c wiring.
+numpy<2.5
+fsspec<=2026.4.0
+
+# Dead pins — present only as comments in current Dockerfiles; removed here.
+# packaging<=26.0
+# setuptools<82
