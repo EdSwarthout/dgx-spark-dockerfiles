@@ -41,5 +41,5 @@ RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
 # #    torchao
 
 ARG USER=ed
-WORKDIR /home/${USER}/Downloads/python/pytorch
+WORKDIR /home/${USER}/Downloads/python
 USER ${USER}
