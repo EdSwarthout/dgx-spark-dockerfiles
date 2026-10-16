@@ -1,30 +1,39 @@
-# docker build --progress plain -t llamacpp .
+# -*- dockerfile-ts -*-
 
-FROM llamacpp_build
+FROM transformers AS llamacpp_build
 
 USER root
 
-# RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
-#     pip install \
-#     inspireface \
-#     opencv-python
-#
-# RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
-#     pip install \
-#     pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install \
+    inspireface \
+    opencv-python
+
+# for server
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install \
+    pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context>="0.3.6,<0.4" \
+    diskcache
+
+# for examples/server
+
+RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
+    pip install \
+    websockets
+
+FROM llamacpp_build AS llamacpp
+
+# Install from wheels
 
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python \
-    --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu132 \
-    -c /workspace/constraints.txt
+    --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu132
 
 RUN ls -l /usr/local/lib/python3.12/dist-packages/llama_cpp/lib
 
 RUN --mount=type=cache,id=pip-cache,target=/root/.cache/pip \
     CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python[server] \
-    --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu132 \
-    -c /workspace/constraints.txt
-
+    --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu132
 
 ARG USER=ed
 USER ${USER}
