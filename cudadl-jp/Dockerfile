@@ -10,6 +10,7 @@ FROM nvcr.io/nvidia/cuda-dl-base:${VER}
 
 ARG USERID=ed
 ENV USERID=${USERID}
+ARG RENDERGID=993
 ENV APT_PACKAGES="emacs-nox libxcb1 python3 python3-pip"
 
 COPY common /common

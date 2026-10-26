@@ -7,6 +7,7 @@ FROM nvcr.io/nvidia/pytorch:${VER}
 
 ARG USERID=ed
 ENV USERID=${USERID}
+ARG RENDERGID=993
 ENV APT_PACKAGES="emacs-nox graphviz libxcb1"
 
 COPY common /common

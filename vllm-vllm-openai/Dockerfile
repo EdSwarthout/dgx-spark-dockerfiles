@@ -6,8 +6,7 @@ ARG VER=latest
 FROM vllm/vllm-openai:${VER}
 
 # NVIDIA Container Toolkit adds host's render gid to user when using --gpus
-# FIXME: invoke build with matching gid
-ARG RENDERGID=993
+ARG RENDERGID=991
 RUN groupadd -g ${RENDERGID} render
 
 # userid=vllm is uid 2000:0

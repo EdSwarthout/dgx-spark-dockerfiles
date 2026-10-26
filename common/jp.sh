@@ -41,6 +41,10 @@ rm -f /opt/nvidia/entrypoint.d/*.txt
 cp /common/.emacs /root/.emacs
 
 useradd -m -s /bin/bash ${USERID}
+
+# NVIDIA Container Toolkit adds host's render gid to user when using --gpus
+groupadd -g ${RENDERGID} render
+
 mkdir -p /home/${USERID}/.cache/huggingface
 mkdir -p /home/${USERID}/.cache/gemma
 mkdir -p /home/${USERID}/.local
